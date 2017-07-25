@@ -1,0 +1,41 @@
+version: '3'
+services:
+    olog-server:
+        container_name: olog
+        image: gciotto/lnls-olog
+        environment:
+            - ADMIN_PASSWORD=controle
+        ports:
+            - "4848:4848"
+            - "8080:8080"
+        networks:
+            olog-network:
+                ipv4_address: 192.168.7.2
+        dns:
+            - 10.0.0.71
+            - 10.0.0.72
+        depends_on:
+            - olog-postgres-db
+
+    olog-postgres-db:
+        container_name: olog-postgres-db
+        image: gciotto/olog-postgres-db
+        environment:
+            - POSTGRES_USER=lnls_olog_user
+            - POSTGRES_PASSWORD=controle
+            - POSTGRES_DB=olog
+            - PGDATA=/var/lib/postgresql/data/olog-db
+        networks:
+            olog-network:
+                ipv4_address: 192.168.7.3
+        dns:
+            - 10.0.0.71
+            - 10.0.0.72
+        volumes:
+            - /home/opr24/docker-storage/olog-db:/var/lib/postgresql/data/olog-db
+
+networks:
+    olog-network:
+        ipam:
+            config:
+                - subnet: 192.168.7.0/24
