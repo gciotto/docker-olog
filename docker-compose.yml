@@ -1,13 +1,15 @@
 version: '3'
 services:
     olog-server:
-        container_name: olog
-        image: gciotto/lnls-olog
+        container_name: olog-server
+        image: gciotto/olog-server
         environment:
             - ADMIN_PASSWORD=controle
         ports:
             - "4848:4848"
             - "8080:8080"
+            - "8181:8181"
+            - "1527:1527"
         networks:
             olog-network:
                 ipv4_address: 192.168.7.2
@@ -15,15 +17,16 @@ services:
             - 10.0.0.71
             - 10.0.0.72
         depends_on:
-            - olog-postgres-db
+            - olog-mysql-db
 
-    olog-postgres-db:
-        container_name: olog-postgres-db
-        image: gciotto/olog-postgres-db
+    olog-mysql-db:
+        container_name: olog-mysql-db
+        image: gciotto/olog-mysql-db
         environment:
-            - POSTGRES_USER=lnls_olog_user
-            - POSTGRES_PASSWORD=controle
-            - POSTGRES_DB=olog
+            - MYSQL_USER=lnls_olog_user
+            - MYSQL_ROOT_PASSWORD=controle
+            - MYSQL_PASSWORD=controle
+            - MYSQL_DATABASE=olog
             - PGDATA=/var/lib/postgresql/data/olog-db
         networks:
             olog-network:
@@ -32,7 +35,24 @@ services:
             - 10.0.0.71
             - 10.0.0.72
         volumes:
-            - /home/opr24/docker-storage/olog-db:/var/lib/postgresql/data/olog-db
+            - /home/opr24/docker-storage/olog-db:/var/lib/mysql
+
+    # olog-postgres-db:
+    #     container_name: olog-postgres-db
+    #     image: gciotto/olog-postgres-db
+    #     environment:
+    #         - POSTGRES_USER=lnls_olog_user
+    #         - POSTGRES_PASSWORD=controle
+    #         - POSTGRES_DB=olog
+    #         - PGDATA=/var/lib/postgresql/data/olog-db
+    #     networks:
+    #         olog-network:
+    #             ipv4_address: 192.168.7.3
+    #     dns:
+    #         - 10.0.0.71
+    #         - 10.0.0.72
+    #     volumes:
+    #         - /home/opr24/docker-storage/olog-db:/var/lib/postgresql/data/olog-db
 
 networks:
     olog-network:
