@@ -1,0 +1,61 @@
+version: '3.2'
+services:
+    olog-server:
+        hostname: olog-server
+        image: lnlscon/olog-server:latest
+        environment:
+            - ADMIN_PASSWORD=controle
+        ports:
+            - "4848:4848"
+            - "8080:8080"
+            - "8181:8181"
+            - "1527:1527"
+        networks:
+            - olog-network
+        dns:
+            - 10.0.0.71
+            - 10.0.0.72
+        depends_on:
+            - olog-mysql-db
+        volumes:
+            - /storage/olog/data/:/glassfish4/glassfish/domains/domain1/config/jackrabbit/
+
+    olog-mysql-db:
+        hostname: olog-mysql-db
+        image: lnlscon/olog-mysql-db:latest
+        environment:
+            - MYSQL_USER=lnls_olog_user
+            - MYSQL_ROOT_PASSWORD=controle
+            - MYSQL_PASSWORD=controle
+            - MYSQL_DATABASE=olog
+            - PGDATA=/var/lib/postgresql/data/olog-db
+        networks:
+            - olog-network
+        dns:
+            - 10.0.0.71
+            - 10.0.0.72
+        volumes:
+            - /storage/olog/db:/var/lib/mysql
+
+    # olog-postgres-db:
+    #     container_name: olog-postgres-db
+    #     image: gciotto/olog-postgres-db
+    #     hostname: olog-postgres-db
+    #     environment:
+    #         - POSTGRES_USER=lnls_olog_user
+    #         - POSTGRES_PASSWORD=controle
+    #         - POSTGRES_DB=olog
+    #         - PGDATA=/var/lib/postgresql/data/olog-db
+    #     networks:
+    #         - olog-network
+    #     dns:
+    #         - 10.0.0.71
+    #         - 10.0.0.72
+    #     volumes:
+    #         - /home/opr24/docker-storage/olog-db:/var/lib/postgresql/data/olog-db
+
+networks:
+    olog-network:
+        ipam:
+            config:
+                - subnet: 192.168.7.0/24
