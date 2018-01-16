@@ -6,9 +6,12 @@ services:
         hostname: olog-server
         environment:
             - ADMIN_PASSWORD=controle
+            - CERTIFICATE_PASSWORD=controle
+            - BIND_DN=***REMOVED***
+            - BIND_PASS=***REMOVED***
         ports:
             - "4848:4848"
-            - "8080:8080"
+            - "8686:8686"
             - "8181:8181"
             - "1527:1527"
         networks:
@@ -20,12 +23,12 @@ services:
         depends_on:
             - olog-mysql-db
         volumes:
-            - /home/opr24/docker-storage/olog-jackrabbit/:/glassfish4/glassfish/domains/domain1/config/jackrabbit/
+            - /storage/olog/data/:/glassfish4/glassfish/domains/domain1/config/jackrabbit/
 
     olog-mysql-db:
         container_name: olog-mysql-db
         image: lnlscon/olog-mysql-db:latest
-       	hostname: olog-mysql-db
+        hostname: olog-mysql-db
         environment:
             - MYSQL_USER=lnls_olog_user
             - MYSQL_ROOT_PASSWORD=controle
@@ -39,7 +42,7 @@ services:
             - 10.0.0.71
             - 10.0.0.72
         volumes:
-            - /home/opr24/docker-storage/olog-db:/var/lib/mysql
+            - /storage/olog/db:/var/lib/mysql
 
     # olog-postgres-db:
     #     container_name: olog-postgres-db

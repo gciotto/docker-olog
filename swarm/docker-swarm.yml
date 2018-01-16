@@ -5,9 +5,11 @@ services:
         image: lnlscon/olog-server:latest
         environment:
             - ADMIN_PASSWORD=controle
+            - CERTIFICATE_PASSWORD=controle
+            - BIND_DN=***REMOVED***
+            - BIND_PASS=***REMOVED***
         ports:
             - "4848:4848"
-            - "8080:8080"
             - "8181:8181"
             - "1527:1527"
         networks:
