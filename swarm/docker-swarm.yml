@@ -6,8 +6,8 @@ services:
         environment:
             - ADMIN_PASSWORD=controle
             - CERTIFICATE_PASSWORD=controle
-            - BIND_DN=***REMOVED***
-            - BIND_PASS=***REMOVED***
+            - BIND_DN=CN=***bind_dn***
+            - BIND_PASS=***bind_dn_passwd***
         ports:
             - "4848:4848"
             - "8181:8181"
