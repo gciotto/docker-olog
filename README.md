@@ -6,7 +6,7 @@ Deployment files for the Olog docker containers.
 
 ### Executing `docker-compose.yml`
 
-Clone and change your working directory to the project folder. Then, execute `docker-compose up -d` to deploy all containers and `docker-compose down` to stop them. Remember to update the volume bindings wuth paths in system!
+Clone and change your working directory to the project folder. Then, execute `docker-compose up -d` to deploy all containers and `docker-compose down` to stop them. Remember to update the volume bindings with paths in your system!
 
 ### Setting `systemd` services up
 
