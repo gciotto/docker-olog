@@ -21,6 +21,11 @@ services:
             - olog-mysql-db
         volumes:
             - /storage/olog/data/:/glassfish4/glassfish/domains/domain1/config/jackrabbit/
+        deploy:
+            resources:
+              limits:
+                cpus: "4"
+                memory: 4096M
 
     olog-mysql-db:
         hostname: olog-mysql-db
@@ -38,6 +43,11 @@ services:
             - 10.0.0.72
         volumes:
             - /storage/olog/db:/var/lib/mysql
+        deploy:
+            resources:
+              limits:
+                cpus: "0.5"
+                memory: 512M
 
     # olog-postgres-db:
     #     container_name: olog-postgres-db
