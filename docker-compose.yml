@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
     olog-server:
         container_name: olog-server
@@ -7,11 +7,16 @@ services:
         environment:
             - ADMIN_PASSWORD=controle
             - CERTIFICATE_PASSWORD=controle
-            - BIND_DN=CN=***bind_dn***
-            - BIND_PASS=***bind_dn_passwd***
+            - DB_USER=lnls_olog_user
+            - DB_PASSWORD=controle
+            - DB_NAME=olog
+            - REALM_SEARCH_BIND_DN=CN=***bind_dn***
+            - REALM_SEARCH_BIND_PASS=***bind_dn_passwd***
+            - REALM_SEARCH_FILTER="sAMAccountName=%s"
+            - REALM_BASE_DN="OU=Users,OU=LNLS,DC=abtlus,DC=org,DC=br"
+            - REALM_URL="ldap://ad1.abtlus.org.br:389"
         ports:
             - "4848:4848"
-            - "8686:8686"
             - "8181:8181"
             - "1527:1527"
         networks:

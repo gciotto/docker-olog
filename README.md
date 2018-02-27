@@ -2,6 +2,10 @@
 
 Deployment files for the Olog docker containers.
 
+## Environment variables
+
+For a description of the environment variables needed for this project, consult this [link](https://github.com/lnls-sirius/docker-olog-server).
+
 ## Deployment with Docker Compose
 
 ### Executing `docker-compose.yml`
